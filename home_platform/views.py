@@ -32,6 +32,14 @@ class JobListView(ListView):
     template_name = "homePage_list.html"
     context_object_name = "jobs"
 
+    def get(self, request, *args, **kwargs):
+        print(request.user.role)
+        if request.user.role == 'applicant':
+            return redirect("create_job")
+        elif request.user.role == "moderator":
+            return render(request, "recruiter/homePage_list_recruiter.html")
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
         return self.model.objects.order_by("id")
 

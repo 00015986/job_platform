@@ -19,7 +19,7 @@
     <!-- Heading Part-->
     <div class="row gx-4 gx-lg-5 align-items-center my-5 bg-light">
         <div class="container py-5">
-            <h1 class="fs-1 fw-bolder">Django Jobs. Get Hired Quickly! Recruiter</h1>
+            <h1 class="fs-1 fw-bolder">Django Jobs. Get Hired Quickly!</h1>
         </div>
         <!-- Outer Container with light background > Search and Filter -->
         <div class="container bg-light mb-4">
@@ -27,7 +27,7 @@
             <div class="bg-white p-4 rounded shadow-sm">
                 <nav class="navbar bg-body-tertiary w-100">
                     <div class="container-fluid">
-                        <form class="d-flex flex-column flex-md-row w-100" role="search">
+                        <form class="d-flex flex-column flex-md-row w-100" role="search" id="search_form">
                             <div class="me-2 mb-2 mb-md-0 w-100">
                                 <label for="filterByName" class="form-label">Filter by Name</label>
                                 <input class="form-control form-control-lg" type="search" id="filterByName"
@@ -105,4 +105,5 @@
 
 {% block footer %}
 {% include "parts/footer.html" %}
+<script src="{% static 'js/search.js' %}"></script>
 {% endblock footer %}

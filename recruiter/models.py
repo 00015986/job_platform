@@ -1,5 +1,5 @@
+
 from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils import timezone
 
@@ -8,6 +8,7 @@ class Company(models.Model):
     location = models.CharField(max_length=255, default='Unknown')
     recruiter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     founded_year = models.IntegerField(default=2003)
+    # job = models.ForeignKey("Job", on_delete=models.CASCADE)
     # Other fields
 
 class Job(models.Model):
@@ -20,7 +21,7 @@ class Job(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    company = models.CharField(max_length=255, default='OSCP')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     industry = models.CharField(max_length=255, default='Technology')
     job_type = models.CharField(max_length=2, choices=JOB_TYPES, default='FT')
     location = models.CharField(max_length=255, default='Unknown')
@@ -38,3 +39,33 @@ class Job(models.Model):
             return f'{hours} hours ago'
         minutes = (delta.seconds % 3600) // 60
         return f'{minutes} minutes ago'
+
+
+class ApplyJob(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="applied_jobs")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="applied_users")
+
+class HiredUser(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="hired_user")
+    recruiter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="hired_recruiter")
+    created_at = models.DateTimeField(auto_now_add=True)
+"""
+One to Many
+Company 1 -> Job 1, Job 2, Job 3
+
+
+
+Many to One
+Company 1, Company 2, Company 3 -> Job 1 
+
+
+Many to Many
+Google -> Recruiter 1
+Amazon -> Recruiter 1
+Google -> Recruiter 2
+Amazon -> Recruiter 2
+
+One to One
+Company 1 - Job 1
+
+"""
