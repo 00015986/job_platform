@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+<!--custom_filters humanize -->
+
+{% load static %}
+
+{% block styles %}
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block navbar %}
+{% include "parts/navbar.html" %}
+{% endblock navbar %}
+
+{% block content %}
+<!-- Page Content-->
+<div class="container px-4 px-lg-5 flex-grow-1">
+    <!-- Heading Part-->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5 bg-light">
+        <div class="container py-5">
+            <h1 class="fs-1 fw-bolder">Django Jobs. Get Hired Quickly! Applicant</h1>
+        </div>
+        <!-- Outer Container with light background > Search and Filter -->
+        <div class="container bg-light mb-4">
+            <!-- Inner Container with white background for the search form -->
+            <div class="bg-white p-4 rounded shadow-sm">
+                <nav class="navbar bg-body-tertiary w-100">
+                    <div class="container-fluid">
+                        <form class="d-flex flex-column flex-md-row w-100" role="search">
+                            <div class="me-2 mb-2 mb-md-0 w-100">
+                                <label for="filterByName" class="form-label">Filter by Name</label>
+                                <input class="form-control form-control-lg" type="search" id="filterByName"
+                                       placeholder="Job Keyword" aria-label="Search">
+                            </div>
+                            <div class="me-2 mb-2 mb-md-0 w-100">
+                                <label for="selectLocation" class="form-label">Select Location</label>
+                                <select class="form-select form-select-lg" id="selectLocation">
+                                    <option value="">---------</option>
+                                    {% for job in jobs %}
+                                        <option value="{{ job.location }}">{{ job.location }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="me-2 mb-2 mb-md-0 w-100">
+                                <label for="chooseJobType" class="form-label">Choose Job Type</label>
+                                <select class="form-select form-select-lg" id="chooseJobType">
+                                    <option value="">---------</option>
+                                    {% for job in jobs %}
+                                        <option value="{{ job.job_type }}">{{ job.job_type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="me-2 mb-2 mb-md-0 w-100">
+                                <label for="selectIndustry" class="form-label">Select Industry</label>
+                                <select class="form-select form-select-lg" id="selectIndustry">
+                                    <option value="">---------</option>
+                                    {% for job in jobs %}
+                                        <option value="{{ job.industry }}">{{ job.industry }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="w-100">
+                                <label class="form-label d-none d-md-block">&nbsp;</label>
+                                <button class="btn btn-outline-success btn-lg w-100" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+
+        <!-- Text and More Jobs button section -->
+        <div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! <br>
+                Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+
+            <button type="button" class="btn btn-outline-primary mb-4">More Jobs</button>
+        </div>
+    </div>
+
+    <!-- Content Row-->
+    <div class="row gx-4 gx-lg-5">
+        {% for job in jobs %}
+        <div class="col-md-4 mb-5 job-card">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">{{ job.title }}</h2>
+                    <p class="job-location">Location: {{ job.location }}</p>
+                    <p class="job-type">Job Type: {{ job.job_type }}</p>
+                    <p class="job-industry">Industry: {{ job.industry }}</p>
+                    <p>Salary: ${{ job.salary }}</p>
+                </div>
+                <div class="card-footer">
+                    <p class="text-muted">Posted {{ job.get_time_since_posted }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% include "parts/footer.html" %}
+{% endblock footer %}

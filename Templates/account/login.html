@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block content %}
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <!-- Left side for welcome message -->
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div>
+                                    <h1>Welcome to Django Job Portal</h1>
+                                    <p>Your gateway to finding the perfect job or candidate! We keep our dependencies up
+                                        to date and squash bugs as they come!
+                                        date and squash bugs as they come!</p>
+                                </div>
+                            </div>
+                            <!-- Right side for the login form -->
+                            <div class="col-md-6">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-body">
+                                        <form method="POST" action="{% url 'account_login' %}">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+
+                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <button class="btn btn-primary" type="submit">Login</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center py-3">
+                                        <div class="small">
+                                            <p>Register as an Applicant: <a href="{% url 'account_signup' %}">Sing Up</a></p>
+                                            <p>Register as a Recruiter: <a href="{% url 'account_signup' %}">Sing Up</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock content %}
+

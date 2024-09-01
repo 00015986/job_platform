@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block content %}
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Logout</h3></div>
+                            <p>Are you sure that you want to Sing Out?</p>
+                            <form method="post" action="{% url 'account_logout' %}">
+                                {% csrf_token %}
+                                {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_value }}"
+                                       value="{{ redirect_field_value }}"/>
+                                {% endif %}
+                                <button type="submit" class="btn btn-danger">Sing Out</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+<!--custom_filters humanize -->
+
+{% load static %}
+
+{% block styles %}
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+{% endblock styles %}
+
+{% block navbar %}
+{% include "parts/navbar.html" %}
+{% endblock navbar %}
+
+{% block content %}
+<!-- Page Content-->
+<div class="container px-4 px-lg-5 flex-grow-1">
+    <!-- Heading Part-->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5 bg-light">
+        <div class="container py-5">
+            <h1 class="fs-1 fw-bolder">Django Jobs. Get Hired Quickly!</h1>
+            <p class="fs-3 fw-medium pt-5">All Available Jobs</p>
+        </div>
+    </div>
+
+    <!-- Content Row-->
+    <div class="row gx-4 gx-lg-5">
+        {% for job in jobs %}
+        <div class="col-md-4 mb-5 job-card">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">{{ job.title }}</h2>
+                    <p class="job-location">Location: {{ job.location }}</p>
+                    <p>Salary: ${{ job.salary }}</p>
+                    <p class="job-industry">Company: {{ job.company }}</p>
+                    <a class="btn btn-primary" href="#">View Details</a>
+                </div>
+                <div class="card-footer">
+                    <p class="text-muted">Posted {{ job.get_time_since_posted }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% include "parts/footer.html" %}
+{% endblock footer %}
+
